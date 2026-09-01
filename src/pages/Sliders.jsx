@@ -146,7 +146,7 @@ export default function Sliders() {
       if (response.ok) {
         // Construct full URL (e.g., http://localhost:5000/uploads/...)
         const hostUrl = baseUrl.replace('/api', '');
-        const fullImageUrl = `${hostUrl}${data.url}`;
+        const fullImageUrl = data.url.startsWith('http') ? data.url : `${hostUrl}${data.url}`;
         
         if (isEdit) {
           setEditFormData({ ...editFormData, imageUrl: fullImageUrl });
