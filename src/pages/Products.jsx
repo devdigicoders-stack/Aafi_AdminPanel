@@ -16,7 +16,7 @@ const Products = () => {
   const [editLoading, setEditLoading] = useState(false);
 
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
-  const [addFormData, setAddFormData] = useState({ name: '', category: '', imageUrl: '', description: '', isActive: true, status: 'approved' });
+  const [addFormData, setAddFormData] = useState({ name: '', category: '', imageUrl: '', description: '', isActive: true, status: 'approved', callNumber: '', whatsappNumber: '' });
   const [addLoading, setAddLoading] = useState(false);
 
   const [imageUploading, setImageUploading] = useState(false);
@@ -137,7 +137,9 @@ const Products = () => {
       imageUrl: product.imageUrl,
       description: product.description,
       status: product.status,
-      isActive: product.isActive
+      isActive: product.isActive,
+      callNumber: product.callNumber || '',
+      whatsappNumber: product.whatsappNumber || ''
     });
     setIsEditModalOpen(true);
   };
@@ -585,6 +587,27 @@ const Products = () => {
                     />
                   </div>
 
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Call Number</label>
+                      <input 
+                        type="text" 
+                        value={editFormData.callNumber || ''}
+                        onChange={(e) => setEditFormData({...editFormData, callNumber: e.target.value})}
+                        className="w-full px-4 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/50"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">WhatsApp</label>
+                      <input 
+                        type="text" 
+                        value={editFormData.whatsappNumber || ''}
+                        onChange={(e) => setEditFormData({...editFormData, whatsappNumber: e.target.value})}
+                        className="w-full px-4 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/50"
+                      />
+                    </div>
+                  </div>
+
                   <div className="p-4 bg-gray-50 rounded-lg border border-gray-100 space-y-4">
                     <h4 className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Admin Controls</h4>
                     
@@ -720,6 +743,27 @@ const Products = () => {
                       className="w-full px-4 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/50"
                       required
                     />
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Call Number</label>
+                      <input 
+                        type="text" 
+                        value={addFormData.callNumber}
+                        onChange={(e) => setAddFormData({...addFormData, callNumber: e.target.value})}
+                        className="w-full px-4 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/50"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">WhatsApp</label>
+                      <input 
+                        type="text" 
+                        value={addFormData.whatsappNumber}
+                        onChange={(e) => setAddFormData({...addFormData, whatsappNumber: e.target.value})}
+                        className="w-full px-4 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/50"
+                      />
+                    </div>
                   </div>
 
                   <div className="p-4 bg-gray-50 rounded-lg border border-gray-100 space-y-4">
