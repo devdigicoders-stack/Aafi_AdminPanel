@@ -16,7 +16,7 @@ const Products = () => {
   const [editLoading, setEditLoading] = useState(false);
 
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
-  const [addFormData, setAddFormData] = useState({ name: '', category: '', imageUrl: '', description: '', isActive: true, status: 'approved', callNumber: '', whatsappNumber: '' });
+  const [addFormData, setAddFormData] = useState({ name: '', category: '', imageUrl: '', description: '', isActive: true, status: 'approved', callNumber: '', whatsappNumber: '', isFeatured: false });
   const [addLoading, setAddLoading] = useState(false);
 
   const [imageUploading, setImageUploading] = useState(false);
@@ -138,6 +138,7 @@ const Products = () => {
       description: product.description,
       status: product.status,
       isActive: product.isActive,
+      isFeatured: product.isFeatured || false,
       callNumber: product.callNumber || '',
       whatsappNumber: product.whatsappNumber || ''
     });
@@ -210,7 +211,7 @@ const Products = () => {
         setProducts([newProduct, ...products]);
         toast.success('Product added successfully');
         setIsAddModalOpen(false);
-        setAddFormData({ name: '', category: '', imageUrl: '', description: '', isActive: true, status: 'approved' });
+        setAddFormData({ name: '', category: '', imageUrl: '', description: '', isActive: true, status: 'approved', callNumber: '', whatsappNumber: '', isFeatured: false });
       } else {
         toast.error(data.message || 'Failed to add product');
       }
@@ -239,7 +240,8 @@ const Products = () => {
           imageUrl: editFormData.imageUrl,
           description: editFormData.description,
           status: editFormData.status,
-          isActive: editFormData.isActive
+          isActive: editFormData.isActive,
+          isFeatured: editFormData.isFeatured
         })
       });
 
@@ -363,8 +365,13 @@ const Products = () => {
               <div key={product._id} className="bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100 overflow-hidden group flex flex-col relative">
                 
                 {/* Status Badge Overlay */}
-                <div className="absolute top-3 right-3 z-10 shadow-sm">
+                <div className="absolute top-3 right-3 z-10 shadow-sm flex flex-col items-end gap-1">
                   {getStatusBadge(product.status)}
+                  {product.isFeatured && (
+                    <span className="inline-flex items-center gap-1 px-2.5 py-1 text-[10px] font-bold tracking-wide rounded-full bg-blue-100 text-blue-700 uppercase border border-blue-200 shadow-sm">
+                      ★ Featured
+                    </span>
+                  )}
                 </div>
 
                 {/* Image Section */}
@@ -635,6 +642,19 @@ const Products = () => {
                         <option value="false">Hidden</option>
                       </select>
                     </div>
+
+                    <div className="flex items-center gap-2 mt-4 bg-yellow-50 p-3 rounded border border-yellow-100">
+                      <input 
+                        type="checkbox" 
+                        id="editIsFeatured"
+                        checked={editFormData.isFeatured}
+                        onChange={(e) => setEditFormData({...editFormData, isFeatured: e.target.checked})}
+                        className="w-4 h-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500 cursor-pointer"
+                      />
+                      <label htmlFor="editIsFeatured" className="text-sm font-bold text-gray-800 cursor-pointer">
+                        Mark as Featured Campaign (Home Screen)
+                      </label>
+                    </div>
                   </div>
                 </div>
 
@@ -792,6 +812,19 @@ const Products = () => {
                         <option value="true">Visible</option>
                         <option value="false">Hidden</option>
                       </select>
+                    </div>
+
+                    <div className="flex items-center gap-2 mt-4 bg-yellow-50 p-3 rounded border border-yellow-100">
+                      <input 
+                        type="checkbox" 
+                        id="addIsFeatured"
+                        checked={addFormData.isFeatured}
+                        onChange={(e) => setAddFormData({...addFormData, isFeatured: e.target.checked})}
+                        className="w-4 h-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500 cursor-pointer"
+                      />
+                      <label htmlFor="addIsFeatured" className="text-sm font-bold text-gray-800 cursor-pointer">
+                        Mark as Featured Campaign (Home Screen)
+                      </label>
                     </div>
                   </div>
                 </div>
